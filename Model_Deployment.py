@@ -238,16 +238,6 @@ st.header('Enter the champions that your teammates have selected: ')
 
 champion_selections = {}
 
-for i in range(1, 10): 
-    # Define a list of options for the drop-down menu
-    options = ['Option 1', 'Option 2', 'Option 3']
-
-    # Display the drop-down menu
-    selected_option = st.selectbox('Select an option:', options, key="slider11")
-
-    # Show the selected option
-    st.write('You selected:', selected_option)
-
 for i in range(1, 10):
     st.subheader(f"PLEASE select champion {i}")
     left_column, right_column = st.columns(2)
@@ -273,6 +263,15 @@ if st.button('Recommend top 10 Champions for your game', key="button1"):
     st.write(prediction)
 
 
+for i in range(1, 10): 
+    # Define a list of options for the drop-down menu
+    options = ['Option 1', 'Option 2', 'Option 3']
+
+    # Display the drop-down menu
+    selected_option = st.selectbox('Select an option:', options, key="slider11")
+
+    # Show the selected option
+    st.write('You selected:', selected_option)
 # In[11]:
 
 
