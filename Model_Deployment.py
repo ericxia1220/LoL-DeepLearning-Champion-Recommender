@@ -268,7 +268,7 @@ for i in range(1, 10):
     options = ['Option 1', 'Option 2', 'Option 3']
 
     # Display the drop-down menu
-    selected_option = st.selectbox('Select an option:', options, key=key=f'option_{i}')
+    selected_option = st.selectbox('Select an option:', options, key=f'option_{i}')
 
     # Show the selected option
     st.write('You selected:', selected_option)
