@@ -237,19 +237,18 @@ st.text_input("Enter your Name: ", key="name")
 st.header('Enter the champions that your teammates have selected: ')
 
 champion_selections = {}
-champion_selections1 = {}
 for i in range(1, 5):
     st.subheader(f"Please select champion {i}")
     left_column, right_column = st.columns(2)
     with left_column:
-        champion_selections1[f'champion_{i}'] = st.selectbox('Select a champion:', np.unique(champion_encoded['id']), key=f'option_{i}')
+        champion_selections[f'champion_{i}'] = st.selectbox('Select a champion:', np.unique(champion_encoded['id']), key=f'option_{i}')
         
 st.header('Enter the champions that your opponents have selected: ')
 for i in range(5, 10):
     st.subheader(f"Please select champion {i}")
     left_column, right_column = st.columns(2)
     with left_column:
-        champion_selections1[f'champion_{i}'] = st.selectbox('Select a champion:', np.unique(champion_encoded['id']), key=f'option_{i}')
+        champion_selections[f'champion_{i}'] = st.selectbox('Select a champion:', np.unique(champion_encoded['id']), key=f'option_{i}')
         
 
 
