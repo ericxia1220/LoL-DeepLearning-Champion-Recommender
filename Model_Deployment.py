@@ -243,7 +243,7 @@ for i in range(1, 10):
     options = ['Option 1', 'Option 2', 'Option 3']
 
     # Display the drop-down menu
-    selected_option = st.selectbox('Select an option:', options, key="key1")
+    selected_option = st.selectbox('Select an option:', options, key="slider11")
 
     # Show the selected option
     st.write('You selected:', selected_option)
@@ -265,10 +265,10 @@ selected_team_position = st.select_slider("Select team position:", options=team_
 hotstreak_options = ['Yes', 'No']
 selected_hotstreak = st.selectbox("Is the player on a hot streak?", options=hotstreak_options, key="slider3")
 
-win_pct = st.slider("Win percentage (%)", min_value=0.0, max_value=100.0, step=0.1)
+win_pct = st.slider("Win percentage (%)", min_value=0.0, max_value=100.0, step=0.1, key="slider4")
 win_pct = win_pct/100
 
-if st.button('Recommend top 10 Champions for your game'):
+if st.button('Recommend top 10 Champions for your game', key="button1"):
     prediction = predict(*champion_selections.values(), selected_hotstreak, selected_team_position, win_pct)
     st.write(prediction)
 
