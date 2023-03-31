@@ -242,7 +242,7 @@ CPscaler = MinMaxScaler(feature_range=(0.5, 5))
 def SVD_recommend(summoner_name, most_played_champions, most_played_CP, recommend_df): 
     player_df = pd.DataFrame()
     for i in range(5):
-        mastery_info =  {"playerId":[summoner_name], "championId": [most_played_champions[i]], "championPoints": [most_played_CP[i]]}
+        mastery_info =  {"playerId":[summoner_name], "championId": [name_to_key[most_played_champions[i]]], "championPoints": [most_played_CP[i]]}
         player_df = pd.concat([player_df, pd.DataFrame(mastery_info)], axis=0)
     player_df.championPoints = CPscaler.fit_transform(player_df.championPoints.values.reshape(-1, 1))
     recommend_df = pd.concat([recommend_df, player_df], axis=0)
@@ -264,11 +264,11 @@ def SVD_recommend(summoner_name, most_played_champions, most_played_CP, recommen
     svd.fit(trainset) 
 
     recommended = {}
-        for key, champ in champ_dict.items(): 
+    for key, champ in champ_dict.items(): 
         #for key in df.championId.unique():
-            if (key not in most_CP_keys):  
-                pred = svd.predict(summoner_name, key, verbose=False)
-                recommended.update({champ_dict[pred.iid]: pred.est})
+        if (key not in most_CP_keys):  
+            pred = svd.predict(summoner_name, key, verbose=False)
+            recommended.update({champ_dict[pred.iid]: pred.est})
     top_five = sorted(recommended.items(), key=lambda x:x[1], reverse=True)[0:5]
     return top_five
 
