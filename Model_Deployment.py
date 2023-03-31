@@ -326,9 +326,8 @@ if st.button('Recommend top 5 Champions based on your preferences', key="button2
     st.write(most_played_champions)
     st.write(most_played_CP)
     st.write(predictionCP)
-
-my_list = ['item 1', 'item 2', 'item 3', 'item4']
-st.write(my_list)
+    most_played_champions = []
+    most_played_CP = []
                                         
                                        
 
