@@ -318,7 +318,7 @@ most_played_champions = []
 most_played_CP = []
 for i in range(5): 
     most_played_champions.append(st.selectbox('Select a champion:', np.unique(champion_encoded['id']), key=f'MP_champ_{i}'))
-    most_played_CP.append(st.number_input(key=f'CP_{i}'))
+    most_played_CP.append(st.number_input('Enter the mastery points for this champion: ', key=f'CP_{i}'))
                                         
                                        
 
