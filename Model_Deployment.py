@@ -278,7 +278,7 @@ def SVD_recommend(summoner_name, most_played_champions, most_played_CP, recommen
 # streamlit display 
 st.title('LoL Champion Recommender Prototype')
 st.image(image, caption='Death is like the wind - always by my side', use_column_width=True)
-st.text_input("Enter your Name: ", key="name")
+summoner_name = st.text_input("Enter your Name: ", key="name")
 st.header('Enter the champions that your teammates have selected: ')
 
 champion_selections = {}
@@ -318,7 +318,11 @@ most_played_champions = []
 most_played_CP = []
 for i in range(5): 
     most_played_champions.append(st.selectbox('Select a champion:', np.unique(champion_encoded['id']), key=f'MP_champ_{i}'))
-    most_played_CP.append(st.number_input('Enter the mastery points for this champion: ', key=f'CP_{i}'))
+    most_played_CP.append(st.number_input('Enter the mastery points for this champion: ', value=0, step=1000, format="%d", key=f'CP_{i}'))
+    
+if st.button('Recommend top 5 Champions based on your preferences', key="button2"):
+    predictionCP = SVD_recommend(summoner_name, most_played_champions, most_played_CP, recommend_df)
+    st.write(predictionCP)
                                         
                                        
 
