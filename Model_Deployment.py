@@ -264,7 +264,7 @@ def SVD_recommend(summoner_name, most_played_champions, most_played_CP, recommen
     svd.fit(trainset) 
     
     recommended = {}
-    for key, champ in champ_dict.items(): 
+    for champ, key in name_to_key.items(): 
         #for key in df.championId.unique():
         if (champ not in most_played_champions):  
             pred = svd.predict(summoner_name, key, verbose=False)
