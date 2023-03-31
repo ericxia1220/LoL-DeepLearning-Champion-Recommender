@@ -314,8 +314,13 @@ if st.button('Recommend top 10 Champions for your game', key="button1"):
     
 st.header('Enter your top five most played champions and mastery points') 
 
-champion = st.selectbox('Select a champion:', np.unique(champion_encoded['id']), key=f'option_{i}')
-number = st.number_input()
+most_played_champions = []
+most_played_CP = []
+for i in range(5): 
+    most_played_champions.append(st.selectbox('Select a champion:', np.unique(champion_encoded['id']), key=f'MP_champ_{i}'))
+    most_played_CP.append(st.number_input(key=f'CP_{i}'))
+                                        
+                                       
 
 # In[11]:
 
