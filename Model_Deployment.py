@@ -323,7 +323,7 @@ for i in range(5):
     
 if st.button('Recommend top 5 Champions based on your preferences', key="button2"):
     predictionCP = SVD_recommend(summoner_name, most_played_champions, most_played_CP, recommend_df)
-    st.write(summoner_name)
+    st.write(recommend_df.head())
     st.write(predictionCP)
 
 my_list = ['item 1', 'item 2', 'item 3', 'item4']
