@@ -89,6 +89,7 @@ champ_dict = dict((champ, index) for index, champ in enumerate(champion_df['id']
 # Create a dictionary that maps champion names to their keys
 name_to_key = dict((champ, key) for key, champ in enumerate(champion_df['id']))
 
+key_to_name = {key:champ for champ, key in name_to_key.items()}
 
 # In[9]:
 
@@ -264,11 +265,11 @@ def SVD_recommend(summoner_name, most_played_champions, most_played_CP, recommen
     svd.fit(trainset) 
     
     recommended = {}
-    for champ, key in name_to_key.items(): 
+    for key, champ in key_to_name.items():
         #for key in df.championId.unique():
         if (champ not in most_played_champions):  
             pred = svd.predict(summoner_name, key, verbose=False)
-            recommended.update({champ_dict[pred.iid]: pred.est})
+            recommended.update({key_to_name[pred.iid]: pred.est})
     top_five = sorted(recommended.items(), key=lambda x:x[1], reverse=True)[0:5]
     recommended_champs = [champ[0] for champ in top_five]
     return recommended_champs
