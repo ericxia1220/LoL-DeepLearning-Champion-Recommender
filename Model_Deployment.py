@@ -230,183 +230,48 @@ def predict(champ1,champ2,champ3,champ4,champ5,champ6,champ7,champ8,champ9,hotst
 
 
 # collaborative filtering 
-champ_dict = {266: 'Aatrox',
- 103: 'Ahri',
- 84: 'Akali',
- 166: 'Akshan',
- 12: 'Alistar',
- 32: 'Amumu',
- 34: 'Anivia',
- 1: 'Annie',
- 523: 'Aphelios',
- 22: 'Ashe',
- 136: 'AurelionSol',
- 268: 'Azir',
- 432: 'Bard',
- 200: 'Belveth',
- 53: 'Blitzcrank',
- 63: 'Brand',
- 201: 'Braum',
- 51: 'Caitlyn',
- 164: 'Camille',
- 69: 'Cassiopeia',
- 31: 'Chogath',
- 42: 'Corki',
- 122: 'Darius',
- 131: 'Diana',
- 119: 'Draven',
- 36: 'DrMundo',
- 245: 'Ekko',
- 60: 'Elise',
- 28: 'Evelynn',
- 81: 'Ezreal',
- 9: 'Fiddlesticks',
- 114: 'Fiora',
- 105: 'Fizz',
- 3: 'Galio',
- 41: 'Gangplank',
- 86: 'Garen',
- 150: 'Gnar',
- 79: 'Gragas',
- 104: 'Graves',
- 887: 'Gwen',
- 120: 'Hecarim',
- 74: 'Heimerdinger',
- 420: 'Illaoi',
- 39: 'Irelia',
- 427: 'Ivern',
- 40: 'Janna',
- 59: 'JarvanIV',
- 24: 'Jax',
- 126: 'Jayce',
- 202: 'Jhin',
- 222: 'Jinx',
- 145: 'Kaisa',
- 429: 'Kalista',
- 43: 'Karma',
- 30: 'Karthus',
- 38: 'Kassadin',
- 55: 'Katarina',
- 10: 'Kayle',
- 141: 'Kayn',
- 85: 'Kennen',
- 121: 'Khazix',
- 203: 'Kindred',
- 240: 'Kled',
- 96: 'KogMaw',
- 897: 'KSante',
- 7: 'Leblanc',
- 64: 'LeeSin',
- 89: 'Leona',
- 876: 'Lillia',
- 127: 'Lissandra',
- 236: 'Lucian',
- 117: 'Lulu',
- 99: 'Lux',
- 54: 'Malphite',
- 90: 'Malzahar',
- 57: 'Maokai',
- 11: 'MasterYi',
- 902: 'Milio',
- 21: 'MissFortune',
- 62: 'MonkeyKing',
- 82: 'Mordekaiser',
- 25: 'Morgana',
- 267: 'Nami',
- 75: 'Nasus',
- 111: 'Nautilus',
- 518: 'Neeko',
- 76: 'Nidalee',
- 895: 'Nilah',
- 56: 'Nocturne',
- 20: 'Nunu',
- 2: 'Olaf',
- 61: 'Orianna',
- 516: 'Ornn',
- 80: 'Pantheon',
- 78: 'Poppy',
- 555: 'Pyke',
- 246: 'Qiyana',
- 133: 'Quinn',
- 497: 'Rakan',
- 33: 'Rammus',
- 421: 'RekSai',
- 526: 'Rell',
- 888: 'Renata',
- 58: 'Renekton',
- 107: 'Rengar',
- 92: 'Riven',
- 68: 'Rumble',
- 13: 'Ryze',
- 360: 'Samira',
- 113: 'Sejuani',
- 235: 'Senna',
- 147: 'Seraphine',
- 875: 'Sett',
- 35: 'Shaco',
- 98: 'Shen',
- 102: 'Shyvana',
- 27: 'Singed',
- 14: 'Sion',
- 15: 'Sivir',
- 72: 'Skarner',
- 37: 'Sona',
- 16: 'Soraka',
- 50: 'Swain',
- 517: 'Sylas',
- 134: 'Syndra',
- 223: 'TahmKench',
- 163: 'Taliyah',
- 91: 'Talon',
- 44: 'Taric',
- 17: 'Teemo',
- 412: 'Thresh',
- 18: 'Tristana',
- 48: 'Trundle',
- 23: 'Tryndamere',
- 4: 'TwistedFate',
- 29: 'Twitch',
- 77: 'Udyr',
- 6: 'Urgot',
- 110: 'Varus',
- 67: 'Vayne',
- 45: 'Veigar',
- 161: 'Velkoz',
- 711: 'Vex',
- 254: 'Vi',
- 234: 'Viego',
- 112: 'Viktor',
- 8: 'Vladimir',
- 106: 'Volibear',
- 19: 'Warwick',
- 498: 'Xayah',
- 101: 'Xerath',
- 5: 'XinZhao',
- 157: 'Yasuo',
- 777: 'Yone',
- 83: 'Yorick',
- 350: 'Yuumi',
- 154: 'Zac',
- 238: 'Zed',
- 221: 'Zeri',
- 115: 'Ziggs',
- 26: 'Zilean',
- 142: 'Zoe',
- 143: 'Zyra'}
-
-CP_df = pd.read_csv('playerCP.csv')
-
-most_played_CP = {}
 
 
-def SVD_recommend(summoner_id, most_CP_keys): 
+recommend_df = pd.read_csv('playerCP.csv')
+
+most_played_champions = []
+most_played_CP = []
+
+CPscaler = MinMaxScaler(feature_range=(0.5, 5))
+
+def SVD_recommend(summoner_name, most_played_champions, most_played_CP, recommend_df): 
+    player_df = pd.DataFrame()
+    for i in range(5):
+        mastery_info =  {"playerId":[summoner_name], "championId": [most_played_champions[i]], "championPoints": [most_played_CP[i]]}
+        player_df = pd.concat([player_df, pd.DataFrame(mastery_info)], axis=0)
+    player_df.championPoints = CPscaler.fit_transform(player_df.championPoints.values.reshape(-1, 1))
+    recommend_df = pd.concat([recommend_df, player_df], axis=0)
+
+    mean_CP = recommend_df.groupby('championId', as_index=False)['championPoints'].mean()
+    normalized_CP = pd.merge(recommend_df, mean_CP, on='championId')
+    normalized_CP['championPoints'] = normalized_CP['championPoints_x'] - normalized_CP['championPoints_y']
+
+    points_dict = {'playerId': list(normalized_CP.playerId), 
+                   'championId': list(normalized_CP.championId), 
+                   'championPoints': list(normalized_CP.championPoints)}
+
+    reader = Reader(rating_scale=(0.5, 5))
+
+    data = Dataset.load_from_df(normalized_CP[['playerId', 'championId', 'championPoints']], reader)
+
+    trainset = data.build_full_trainset()
+    svd = SVD() 
+    svd.fit(trainset) 
+
     recommended = {}
-    for key, champ in champ_dict.items(): 
-        if (key not in most_CP_keys):  
-            pred = svd.predict(summoner_id, key, verbose=False)
-            recommended.update({champ_dict[pred.iid]: pred.est})
+        for key, champ in champ_dict.items(): 
+        #for key in df.championId.unique():
+            if (key not in most_CP_keys):  
+                pred = svd.predict(summoner_name, key, verbose=False)
+                recommended.update({champ_dict[pred.iid]: pred.est})
     top_five = sorted(recommended.items(), key=lambda x:x[1], reverse=True)[0:5]
     return top_five
+
 
 # In[10]:
 
