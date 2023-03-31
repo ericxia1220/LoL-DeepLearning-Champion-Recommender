@@ -270,7 +270,8 @@ def SVD_recommend(summoner_name, most_played_champions, most_played_CP, recommen
             pred = svd.predict(summoner_name, key, verbose=False)
             recommended.update({champ_dict[pred.iid]: pred.est})
     top_five = sorted(recommended.items(), key=lambda x:x[1], reverse=True)[0:5]
-    return top_five
+    recommended_champs = [champ[0] for champ in top_five]
+    return recommended_champs
 
 
 # In[10]:
